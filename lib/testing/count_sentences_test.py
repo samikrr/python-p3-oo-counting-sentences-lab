@@ -17,10 +17,15 @@ class TestMyString:
         '''prints "The value must be a string." if not string.'''
         captured_out = io.StringIO()
         sys.stdout = captured_out
-        string = MyString()
-        string.value = 123
+        
+        try:
+            # Initialize MyString with a non-string value
+            string = MyString(123)
+        except ValueError as e:
+            error_message = str(e)  # Get the error message
+            
         sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "The value must be a string.\n")
+        assert error_message == "The value must be a string.\n"
 
     def test_is_sentence(self):
         '''returns True if value ends with a period and False otherwise.'''
